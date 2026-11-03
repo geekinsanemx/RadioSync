@@ -218,3 +218,28 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# radiosync
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+bkp/
+data/
+templates/
+output/
+config/
+*.img
+*.csv
+*.db
+*.sqlite
+*.sqlite3
+*.bkp-*
+*.manifest.json
+*.signature.json
+catalog*.json
+radiosync-catalog*.json
+user-config.toml
+*__[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9].json
+*__[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9].csv
+settings*.json
