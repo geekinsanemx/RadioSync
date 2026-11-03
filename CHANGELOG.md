@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.11 - 2026-11-02
+
+- Documentation in English: README and `docs/` (`usage-guide.md`, `cli-reference.md`,
+  `architecture.md`, `formats.md`, replacing the Spanish file names).
+- Name fitting drops English stopwords (`of`, `the`, `and`) as well as the Spanish ones,
+  so `Hill of Peace` -> `HillPc`; tests cover both languages.
+
 ## 0.1.10 - 2026-11-02
 
 - Neutral place-name examples in the name-fitting tests.

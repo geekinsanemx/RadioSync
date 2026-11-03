@@ -1,9 +1,11 @@
 """radiosync names: shorten channel names to a radio's name length.
 
-Keeps the last token with digits (REP-ABC-123 -> ABC123), drops stopwords and vowels
-from words, and numbers collisions so every fitted name in a list stays distinct.
+Keeps the last token with digits (REP-ABC-123 -> ABC123), drops Spanish and English
+stopwords and vowels from words, and numbers collisions so every fitted name in a list
+stays distinct.
 
 Changelog:
+- 0.1.11 (2026-11-02): English stopwords (of, the, and) alongside the Spanish ones.
 - 0.1.9 (2026-11-01): generic example in the module description.
 - 0.1.4 (2026-11-01): initial version.
 """
@@ -11,7 +13,7 @@ Changelog:
 import re
 
 SEPARATORS = re.compile(r"[\s\-_/]+")
-STOPWORDS = frozenset({"de", "del", "la", "las", "el", "los", "y", "e"})
+STOPWORDS = frozenset({"de", "del", "la", "las", "el", "los", "y", "e", "of", "the", "and"})
 VOWELS = frozenset("aeiouAEIOU")
 
 

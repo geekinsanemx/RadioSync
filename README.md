@@ -1,24 +1,23 @@
 # radiosync
 
-Catálogo maestro de memorias para radios programables con CHIRP. Guarda cada
-programación una sola vez (SQLite), la agrupa en *sets* combinables y genera, por
-**modelo** de radio, una imagen `.img` validada con sus settings, lista para cargarse
-desde CHIRP.
+Master memory catalog for CHIRP-programmable radios. It stores each programming only once
+(SQLite), groups programmings into combinable *sets* and generates, per radio **model**, a
+validated `.img` image with its settings, ready to load from CHIRP.
 
-Versión: 0.1.10
+Version: 0.1.11
 
-## Qué resuelve
+## What it solves
 
-- Una sola lista maestra para todos tus radios; cada modelo recibe su propia imagen.
-- Sets reutilizables (`personal`, `repetidoras`, `scanner`, ...) que se combinan al generar.
-- Importación desde CSV de CHIRP, imágenes `.img` y catálogos JSON, sin duplicar canales.
-- Settings por modelo guardados en JSON y aplicados sobre una imagen descargada del radio.
-- Validación antes de cargar: la imagen se vuelve a abrir con CHIRP y se compara con lo esperado.
+- One master list for all your radios; each model gets its own image.
+- Reusable sets (`personal`, `repeaters`, `scanner`, ...) combined at build time.
+- Import from CHIRP CSV files, `.img` images and JSON catalogs, without duplicating channels.
+- Per-model settings stored as JSON and applied on top of an image downloaded from the radio.
+- Validation before loading: the image is reopened with CHIRP and compared with the expected state.
 
-## Instalación rápida
+## Quick install
 
-Requisitos: Python 3.11+, [pipx](https://pipx.pypa.io/) y CHIRP instalado en su propio
-entorno (por ejemplo `pipx install chirp`).
+Requirements: Python 3.11+, [pipx](https://pipx.pypa.io/) and CHIRP installed in its own
+environment (for example `pipx install chirp`).
 
 ```bash
 pipx install .
@@ -26,7 +25,7 @@ radiosync init
 radiosync where
 ```
 
-## Inicio rápido
+## Quick start
 
 ```bash
 radiosync radios register --template /path/to/download.img
@@ -36,26 +35,27 @@ radiosync build
 radiosync validate
 ```
 
-Los `.img` y `.manifest.json` se guardan en la carpeta actual (o en `--output`). Los datos
-internos (catálogo, perfiles, templates y respaldos) viven en `~/.config/radiosync/`.
+The `.img` and `.manifest.json` files are written to the current directory (or to
+`--output`). Internal data (catalog, profiles, templates and backups) lives in
+`~/.config/radiosync/`.
 
-## Documentación
+## Documentation
 
-| Documento | Contenido |
+| Document | Contents |
 |---|---|
-| [docs/guia-de-uso.md](docs/guia-de-uso.md) | Flujo completo: modelos, importación, sets, builds, potencia, orden, nombres, validación, settings y respaldos |
-| [docs/referencia-cli.md](docs/referencia-cli.md) | Todos los comandos, opciones y variables de entorno |
-| [docs/arquitectura.md](docs/arquitectura.md) | Almacenamiento, proceso de CHIRP, construcción y verificación de imágenes, deduplicación |
-| [docs/formatos.md](docs/formatos.md) | Perfil de radio, preset, catálogo JSON y manifiesto |
-| [CHANGELOG.md](CHANGELOG.md) | Cambios por versión |
+| [docs/usage-guide.md](docs/usage-guide.md) | Full workflow: models, import, sets, builds, power, ordering, names, validation, settings and backups |
+| [docs/cli-reference.md](docs/cli-reference.md) | Every command, option and environment variable |
+| [docs/architecture.md](docs/architecture.md) | Storage, CHIRP process, image build and verification, deduplication |
+| [docs/formats.md](docs/formats.md) | Radio profile, preset, JSON catalog and manifest |
+| [CHANGELOG.md](CHANGELOG.md) | Changes per version |
 
-## Límites
+## Limits
 
-La validación confirma lo que el driver de CHIRP puede leer y escribir; no prueba
-compatibilidad de firmware, comportamiento RF ni autorización para transmitir. Usa como
-template una imagen descargada del mismo modelo y revisa la imagen en CHIRP antes de cargarla.
+Validation confirms what the CHIRP driver can read and write; it does not test firmware
+compatibility, RF behavior or authorization to transmit. Use as the template an image
+downloaded from the same model, and review the image in CHIRP before loading it.
 
-## Desarrollo
+## Development
 
 ```bash
 uv sync
@@ -64,4 +64,4 @@ RADIOSYNC_TEST_TEMPLATE=/path/to/download.img uv run pytest tests/test_chirp_int
 pipx install --force .
 ```
 
-`pipx install .` copia el código; después de modificarlo, reinstala con `--force`.
+`pipx install .` copies the code; after modifying it, reinstall with `--force`.

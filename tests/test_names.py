@@ -1,6 +1,7 @@
 """radiosync tests: name fitting.
 
 Changelog:
+- 0.1.11 (2026-11-02): English stopword cases alongside the Spanish ones.
 - 0.1.10 (2026-11-02): neutral place-name examples.
 - 0.1.9 (2026-11-01): generic example names.
 - 0.1.4 (2026-11-01): initial version.
@@ -21,6 +22,10 @@ from radiosync.names import clean_name, fit_name, fit_names
     ("Pueblo Sur", 6, "PblSr"),
     ("Loma Roja", 6, "LomaRj"),
     ("Esplanada y", 6, "Esplnd"),
+    ("Hill of Peace", 6, "HillPc"),
+    ("The Old Mill", 6, "OldMll"),
+    ("Bread and Butter", 6, "BrdBtt"),
+    ("Hill of Peace 2", 6, "Peace2"),
     ("1.25M-223.50", 6, "223.50"),
     ("2M-146.520", 6, "146.52"),
     ("ABC", 6, "ABC"),
@@ -30,8 +35,12 @@ def test_fit_name(name, limit, expected):
     assert len(fit_name(name, limit)) <= limit
 
 
-def test_fit_names_resolves_collisions():
-    names = ["Valle de Paz", "Valle de Pazo", "RPT-C", "RPT-C"]
+@pytest.mark.parametrize("first,second", [
+    ("Valle de Paz", "Valle de Pazo"),
+    ("Hill of Peace", "Hill of Peach"),
+])
+def test_fit_names_resolves_collisions(first, second):
+    names = [first, second, "RPT-C", "RPT-C"]
     fitted = fit_names(names, 5)
     assert all(len(n) <= 5 for n in fitted)
     assert fitted[0] != fitted[1]
