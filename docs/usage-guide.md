@@ -109,7 +109,14 @@ radiosync build --radio <radio-id>               # one or more models (--radio i
 radiosync build --sets personal,scanner          # combination of sets
 radiosync build --output /path/to/output         # another output directory
 radiosync build --dry-run -v                     # validate and show adaptations without publishing
+radiosync build --radio <radio-id> --chirp       # then open the images in the system CHIRP
+radiosync build --exec /path/to/chirp            # open them with a specific CHIRP executable
 ```
+
+`--chirp` looks for `chirp` in `PATH`, then next to the configured CHIRP interpreter.
+CHIRP starts in the background with one tab per generated image; radiosync does not wait
+for it. Nothing is opened when a build fails, and `--chirp`/`--exec` cannot be combined
+with `--dry-run`.
 
 Channel composition:
 

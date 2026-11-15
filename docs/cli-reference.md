@@ -31,6 +31,7 @@
 ```text
 radiosync build [--radio <id>]... [--sets a,b | --preset <name>] [--output <dir>]
                 [--power low|mid|high] [--sort] [--dry-run] [-v]
+                [--chirp | --exec <path>]
 ```
 
 | Option | Use |
@@ -43,6 +44,8 @@ radiosync build [--radio <id>]... [--sets a,b | --preset <name>] [--output <dir>
 | `--sort` | Order by RX frequency instead of by sets |
 | `--dry-run` | Build and verify without publishing |
 | `--verbose`, `-v` | List every adaptation |
+| `--chirp` | Open the generated images in CHIRP (found in `PATH`, else next to the CHIRP interpreter); does not wait for it |
+| `--exec <path>` | CHIRP executable to open the images with; implies `--chirp` |
 
 ## validate
 

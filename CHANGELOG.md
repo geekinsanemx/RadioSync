@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.12 - 2026-11-14
+
+- `build --chirp` opens the generated images in CHIRP once every build succeeds: one
+  detached process, one tab per image; radiosync does not wait for it.
+- CHIRP is looked up in `PATH`, then next to the configured CHIRP interpreter.
+- `build --exec <path>` uses that CHIRP executable and implies `--chirp`.
+- `--chirp`/`--exec` are rejected with `--dry-run`, since no images are written.
+
 ## 0.1.11 - 2026-11-02
 
 - Documentation in English: README and `docs/` (`usage-guide.md`, `cli-reference.md`,

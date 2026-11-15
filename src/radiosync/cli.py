@@ -1,6 +1,8 @@
 """radiosync cli: Typer command line for catalog, sets, radios, settings, build and validate.
 
 Changelog:
+- 0.1.12 (2026-11-14): build --chirp opens the generated images in CHIRP; --exec selects
+  the CHIRP executable and implies --chirp.
 - 0.1.9 (2026-11-01): help text for where/validate matches storage and output locations.
 - 0.1.8 (2026-11-01): --sort orders build and CHIRP CSV channels by RX frequency.
 - 0.1.5 (2026-11-01): internal user storage; flat outputs in cwd or --output.
@@ -24,6 +26,7 @@ from pydantic import ValidationError
 from . import __version__, memory_rules
 from . import build as build_mod
 from . import catalog, csv_io, json_io, settings as settings_mod, sets as sets_mod, validation
+from . import chirp_launcher
 from .chirp_client import ChirpClient
 from .composition import compose
 from .config import (RadiosyncError, backup_file, chirp_python, find_root,
@@ -838,10 +841,19 @@ def build_cmd(
         dry_run: Annotated[bool, typer.Option("--dry-run", help="Validate without publishing")] = False,
         power: PowerSel = None,
         sort: SortSel = False,
-        verbose: Annotated[bool, typer.Option("--verbose", "-v")] = False) -> None:
+        verbose: Annotated[bool, typer.Option("--verbose", "-v")] = False,
+        open_chirp: Annotated[bool, typer.Option(
+            "--chirp", help="Open the generated images in the system CHIRP")] = False,
+        chirp_exec: Annotated[Optional[Path], typer.Option(
+            "--exec", help="CHIRP executable to open the images with; implies --chirp")] = None) -> None:
     """Generate validated images for one, several or all models."""
     def run():
         level = check_power(power)
+        chirp_exe = None
+        if open_chirp or chirp_exec is not None:
+            if dry_run:
+                raise RadiosyncError("--chirp/--exec cannot be used with --dry-run")
+            chirp_exe = chirp_launcher.find_chirp(env.project, chirp_exec)
         with env.db.session() as session:
             targets = build_mod.plan(env.project, session, radios or [],
                                      split_list(sets) or None, preset, level, sort)
@@ -882,6 +894,10 @@ def build_cmd(
                 echo(f"    image: {item.image}")
         if failed:
             raise RadiosyncError(f"{len(failed)} of {len(results)} builds failed; nothing published")
+        images = [item.image for item in results if item.image]
+        if chirp_exe and images:
+            chirp_launcher.launch(chirp_exe, images)
+            echo(f"Opened in CHIRP: {chirp_exe}")
     run_cli(run)
 
 
