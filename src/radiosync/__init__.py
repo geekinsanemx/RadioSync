@@ -1,6 +1,7 @@
 """radiosync: master channel catalog that generates validated CHIRP images.
 
 Changelog:
+- 0.1.12 (2026-11-14): build --chirp/--exec opens the generated images in CHIRP.
 - 0.1.11 (2026-11-02): English documentation; Spanish and English stopwords in name fitting.
 - 0.1.10 (2026-11-02): neutral test examples; merged .gitignore for publication.
 - 0.1.9 (2026-11-01): documentation, generic examples, stricter ignore rules.
@@ -15,5 +16,5 @@ Changelog:
 - 0.1.0 (2026-11-01): initial version.
 """
 
-__version__ = "0.1.11"
+__version__ = "0.1.12"
 CURRENT_VERSION = __version__
